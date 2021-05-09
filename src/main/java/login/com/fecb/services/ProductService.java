@@ -32,8 +32,8 @@ public class ProductService {
         return repository.findAll(page);
     }
 
-    public void delete(Product product){
-        repository.delete(product);
+    public void delete(Long id){
+        repository.deleteById(id);
     }
 
     public Product update(Product product){

@@ -32,8 +32,8 @@ public class CategoryService {
         return repository.findAll(page);
     }
 
-    public void delete(Category category){
-        repository.delete(category);
+    public void delete(Long id){
+        repository.deleteById(id);
     }
 
     public Category update(Category category){

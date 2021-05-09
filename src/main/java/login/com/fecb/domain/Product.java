@@ -26,6 +26,9 @@ public class Product {
     private BigDecimal price;
 
     @NotNull
+    private String image;
+
+    @NotNull
     @ManyToOne()
     @JoinColumn(name = "categoryId")
     private Category category;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -49,9 +50,9 @@ public class CategoryResource {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method=RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@RequestBody Category category){
-        service.delete(category);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@RequestBody @PathVariable("id") Long id){
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
