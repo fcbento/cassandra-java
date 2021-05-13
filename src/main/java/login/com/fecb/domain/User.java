@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,9 @@ public class User implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PROFILES")
     private Set<Integer> profiles = new HashSet<>();
+
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private List<Address> addressList = new ArrayList<>();
 
     public User(){
 
