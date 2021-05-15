@@ -1,5 +1,6 @@
 package login.com.fecb.services;
 
+import login.com.fecb.domain.Address;
 import login.com.fecb.domain.User;
 import login.com.fecb.dto.UserDTO;
 import login.com.fecb.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,17 +25,26 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder pe;
 
+    @Autowired
+    private AddressService addressService;
+
     public User find(Integer id){
 
-        UserSecurity user = UserServiceAuth.authenticated();
+        //UserSecurity user = UserServiceAuth.authenticated();
 
-//        if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
-//            throw new AuthorizationException("Denied");
-//        }
+        //if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+            //throw new AuthorizationException("Denied");
+        //}
 
         Optional<User> obj = userRepository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Not found! Id: " + id + ", Type: " + User.class.getName()));
+        List<Address> address = addressService.findByUser(id);
+        User user = obj.get();
+
+        if(obj.isPresent()){
+            user.setAddressList(address);
+        }
+
+        return user;
     }
 
     @Transactional
@@ -44,7 +55,7 @@ public class UserService {
     }
 
     public User fromDTO(UserDTO objDto) {
-        User cli = new User(null, pe.encode(objDto.getPassword()), objDto.getEmail(), objDto.getName(), objDto.getRole());
+        User cli = new User(null, pe.encode(objDto.getPassword()), objDto.getEmail(), objDto.getName(), objDto.getRole(), objDto.getPhoneNumber());
         return cli;
     }
 

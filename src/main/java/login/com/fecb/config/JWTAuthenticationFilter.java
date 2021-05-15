@@ -1,6 +1,7 @@
 package login.com.fecb.config;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -57,9 +58,27 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication auth) throws IOException, ServletException {
 
         String username = ((UserSecurity) auth.getPrincipal()).getUsername();
+        UserSecurity user =  ((UserSecurity) auth.getPrincipal());
         String token = jwtUtil.generateToken(username);
         res.addHeader("Authorization", "Bearer " + token);
         res.addHeader("access-control-expose-headers", "Authorization");
+
+        PrintWriter out = res.getWriter();
+        ObjectMapper objectMapper= new ObjectMapper();
+        String jsonString = objectMapper.writeValueAsString(user);
+        res.setContentType("application/json");
+        res.setCharacterEncoding("UTF-8");
+        out.print(jsonString);
+        out.flush();
+    }
+
+    private String toJson(UserSecurity user) {
+        long date = new Date().getTime();
+        return "{\"timestamp\": " + date + ", "
+                + "\"email\": \""+user.getUsername() +"\","
+                + "\"address\": \"" + user.getAddressList() + "\","
+                + "\"phoneNumber\": \""+user.getPhoneNumber() +"\","
+                + "\"path\": \"/login \"}";
     }
 
     private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
@@ -74,12 +93,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         private String json() {
             long date = new Date().getTime();
-            return "{\"timestamp\": " + date + ", "
+            return "{\"timestamp\": " + date + ","
                     + "\"status\": 401, "
                     + "\"error\": \"Not authorized\", "
                     + "\"message\": \"Email or password invalid\", "
                     + "\"path\": \"/login\"}";
         }
+
 
     }
 }

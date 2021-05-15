@@ -41,16 +41,19 @@ public class User implements Serializable {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Address> addressList = new ArrayList<>();
 
+    private long phoneNumber;
+
     public User(){
 
     }
 
-    public User(Integer id, String password, String email, String name, Integer role) {
+    public User(Integer id, String password, String email, String name, Integer role, long phoneNumber) {
         this.id = id;
         this.password = password;
         this.email = email;
         this.name = name;
         this.role = role;
+        this.phoneNumber = phoneNumber;
         addProfile();
     }
 

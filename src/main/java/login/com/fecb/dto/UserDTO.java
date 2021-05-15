@@ -25,6 +25,9 @@ public class UserDTO implements Serializable {
     @NotEmpty(message = "Name is required")
     private String name;
 
+    @NotNull(message = "Phone is quired")
+    private long phoneNumber;
+
     @NotNull
     private Integer role;
 }
