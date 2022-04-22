@@ -45,6 +45,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
             "/api/**"
     };
 
+
+    private static final String[] PUBLIC_MATCHERS_DELETE = {
+            "/api/**"
+    };
+
     private static final String[] PUBLIC_MATCHERS_GET = {
             "/user",
             "/api/**"
@@ -64,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                 .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                .antMatchers(HttpMethod.DELETE, PUBLIC_MATCHERS_DELETE).permitAll()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .anyRequest()
                 .authenticated();

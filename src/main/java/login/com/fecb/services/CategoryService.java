@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -25,11 +26,12 @@ public class CategoryService {
     }
 
     public Category save(Category category){
+        category.setCreatedAt(new Date());
         return repository.save(category);
     }
 
     public Page<Category> list(Pageable page){
-        return repository.findAll(page);
+      return repository.findAll(page);
     }
 
     public void delete(Long id){

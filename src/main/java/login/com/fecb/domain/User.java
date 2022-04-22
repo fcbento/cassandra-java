@@ -1,16 +1,14 @@
 package login.com.fecb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 import login.com.fecb.enums.Profile;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -42,6 +40,9 @@ public class User implements Serializable {
     private List<Address> addressList = new ArrayList<>();
 
     private long phoneNumber;
+
+    @NotNull
+    private Date createdAt;
 
     public User(){
 

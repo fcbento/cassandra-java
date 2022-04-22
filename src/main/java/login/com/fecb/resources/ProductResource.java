@@ -50,9 +50,9 @@ public class ProductResource {
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@RequestBody @PathVariable("id") Long id){
-        service.delete(id);
+    @RequestMapping(path = "/remove", method = RequestMethod.POST)
+    public ResponseEntity<Void> delete(@RequestBody List<Product> ids){
+        service.delete(ids);
         return ResponseEntity.noContent().build();
     }
 }

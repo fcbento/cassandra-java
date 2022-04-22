@@ -1,6 +1,7 @@
 package login.com.fecb.resources;
 
 import login.com.fecb.domain.Category;
+import login.com.fecb.domain.Product;
 import login.com.fecb.domain.User;
 import login.com.fecb.dto.UserDTO;
 import login.com.fecb.services.UserService;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/api/users")
@@ -44,6 +46,12 @@ public class UserResource {
     public ResponseEntity<Page<User>> getAll(Pageable page){
         Page<User> users = service.getUsers(page);
         return ResponseEntity.ok().body(users);
+    }
+
+    @RequestMapping(path = "/remove", method = RequestMethod.POST)
+    public ResponseEntity<Void> delete(@RequestBody List<User> ids){
+        service.delete(ids);
+        return ResponseEntity.noContent().build();
     }
 
 }

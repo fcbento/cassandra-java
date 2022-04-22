@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,7 @@ public class ProductService {
     }
 
     public Product save(Product product){
+        product.setCreatedAt(new Date());
         return repository.save(product);
     }
 
@@ -32,8 +35,8 @@ public class ProductService {
         return repository.findAll(page);
     }
 
-    public void delete(Long id){
-        repository.deleteById(id);
+    public void delete(List<Product> ids){
+        repository.deleteAll(ids);
     }
 
     public Product update(Product product){

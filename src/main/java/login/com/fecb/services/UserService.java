@@ -1,6 +1,7 @@
 package login.com.fecb.services;
 
 import login.com.fecb.domain.Address;
+import login.com.fecb.domain.Product;
 import login.com.fecb.domain.User;
 import login.com.fecb.dto.UserDTO;
 import login.com.fecb.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,7 @@ public class UserService {
 
     @Transactional
     public User insert(User obj) {
+        obj.setCreatedAt(new Date());
         obj.setId(null);
         obj = userRepository.save(obj);
         return obj;
@@ -63,4 +66,7 @@ public class UserService {
         return userRepository.findAll(page);
     }
 
+    public void delete(List<User> ids){
+        userRepository.deleteAll(ids);
+    }
 }
